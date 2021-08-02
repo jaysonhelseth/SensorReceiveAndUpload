@@ -11,3 +11,13 @@ There will be a cron task that runs every 2 minutes (maybe a longer wait to avoi
 
 ## Displaying Data
 This will be on a Raspberry Pi that has a small screen attached. The device will boot to a web page hosted on the device that will read from the sqlite table that stores the temperature information.
+
+The current device has a small screen with xserver and no desktop installed. The .xinitrc file in the user account (autologin) looks like this:
+```
+#!/bin/sh
+
+unclutter -idle 0.1 &
+
+# This isn't the final url, but an example from something that already runs on the device.
+exec chromium-browser --kiosk file:///home/pi/xclock/index.html
+```
