@@ -18,6 +18,5 @@ The current device has a small screen with xserver and no desktop installed. The
 
 unclutter -idle 0.1 &
 
-# This isn't the final url, but an example from something that already runs on the device.
-exec chromium-browser --kiosk file:///home/pi/xclock/index.html
+exec chromium-browser --kiosk http://localhost/index.php
 ```
