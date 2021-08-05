@@ -1,5 +1,5 @@
 # SensorReceiveAndUpload
-Receive the Xbee (Zigbee) data and upload it to the cloud. Their will be the ability to see the data too.
+Receive the Xbee (Zigbee) data and upload it to the cloud. There will be the ability to see the data too.
 
 ## Collecting Data
 There will be a Python script running in systemd that will collect the Xbee data and put it into a sqlite table. Systemd files are stored in `/etc/systemd/system` and have a name such as `runlistener.system`.
