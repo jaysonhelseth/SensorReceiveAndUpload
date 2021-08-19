@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <title>Sensor</title>
+    <style>
+        .temp {
+            font-family: monospace;
+            font-size: 2.6em;
+        }
+        body {
+            width: 310px;
+        }
+    </style>
+</head>
+
+<body class="bg-dark">
+    <div class="d-flex align-items-center justify-content-around" style="height: 240px;">
+        <div class="flex-sm-fill">
+            <div class="card text-center border-light bg-dark text-white mb-3">
+                <div class="card-header border-light heading">Pool</div>
+                <div class="card-body">
+                    <p class="card-text">
+                        <div class="row">
+                            <span class="temp">72.5</span>
+                        </div>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="flex-sm-fill">
+            <div class="card text-center border-light bg-dark text-white mb-3">
+                <div class="card-header border-light heading">Indoor</div>
+                <div class="card-body">
+                    <p class="card-text">
+                        <div class="row">
+                            <span class="temp" id="air_temp"></span>
+                        </div>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/dayjs.min.js"></script>
+    <script>
+        let airTemp = document.getElementById("air_temp");
+        let airHum = document.getElementById("air_hum");
+
+        function tempFill() {
+            airTemp.innerText = 88.8
+        }
+        tempFill();
+
+        let ws = new WebSocket("ws://127.0.0.1:5678/");
+        ws.onmessage = function (event) {
+            let json = JSON.parse(event.data);
+            airTemp.innerText = json.temp.toFixed(1);
+        };
+    </script>
+</body>
+
+</html>
