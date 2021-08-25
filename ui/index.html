@@ -51,12 +51,7 @@
         let airTemp = document.getElementById("air_temp");
         let airHum = document.getElementById("air_hum");
 
-        function tempFill() {
-            airTemp.innerText = 88.8
-        }
-        tempFill();
-
-        let ws = new WebSocket("ws://127.0.0.1:5678/");
+        let ws = new WebSocket("ws://127.0.0.1:8000/");
         ws.onmessage = function (event) {
             let json = JSON.parse(event.data);
             airTemp.innerText = json.temp.toFixed(1);
