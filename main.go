@@ -1,37 +1,14 @@
 package main
 
 import (
-	"encoding/json"
+	"SensorReceiveAndUpload/config"
+	"SensorReceiveAndUpload/io"
 	"github.com/gorilla/mux"
 	"github.com/gorilla/websocket"
 	"log"
 	"net/http"
 	"time"
 )
-
-// Maybe move this to a state file somewhere else.
-// That way other files can access it.
-var (
-	ws *websocket.Conn
-)
-
-func readFromSerial() {
-	// Todo: Put sensor read loop in here
-	// Maybe move this code to a new file....
-	//ws.WriteMessage(websocket.TextMessage, []byte("Sensor connected!"))
-
-	var temp float32 = 0.0
-	for {
-		dict := map[string]float32{
-			"temp": temp,
-		}
-		msg, _ := json.Marshal(dict)
-		ws.WriteMessage(websocket.TextMessage, msg)
-
-		temp += 0.1
-		time.Sleep(time.Second * 1)
-	}
-}
 
 func serveWs(w http.ResponseWriter, r *http.Request) {
 	upgrader := websocket.Upgrader{
@@ -44,7 +21,7 @@ func serveWs(w http.ResponseWriter, r *http.Request) {
 
 	var err error
 
-	ws, err = upgrader.Upgrade(w, r, nil)
+	config.Websocket, err = upgrader.Upgrade(w, r, nil)
 	if err != nil {
 		if _, ok := err.(websocket.HandshakeError); !ok {
 			log.Println(err)
@@ -54,7 +31,7 @@ func serveWs(w http.ResponseWriter, r *http.Request) {
 
 	// ws.WriteMessage(websocket.TextMessage, []byte("I'm connected!"))
 	log.Println("I'm connected.")
-	readFromSerial()
+	io.ReadFromSerial()
 }
 
 func main() {
