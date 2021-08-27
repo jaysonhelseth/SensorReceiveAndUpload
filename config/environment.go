@@ -2,13 +2,8 @@ package config
 
 import (
 	"fmt"
-	"github.com/gorilla/websocket"
 	"log"
 	"os"
-)
-
-var (
-	Websocket *websocket.Conn
 )
 
 func GetEnv(key string) string {
