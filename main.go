@@ -29,9 +29,8 @@ func serveWs(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// ws.WriteMessage(websocket.TextMessage, []byte("I'm connected!"))
+	go io.ReadFromSerial()
 	log.Println("I'm connected.")
-	io.ReadFromSerial()
 }
 
 func main() {
