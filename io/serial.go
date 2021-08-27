@@ -2,9 +2,9 @@ package io
 
 import (
 	"SensorReceiveAndUpload/config"
+	"SensorReceiveAndUpload/models"
 	"bufio"
 	"encoding/json"
-	"github.com/gorilla/websocket"
 	"github.com/tarm/serial"
 	"log"
 	"strings"
@@ -57,9 +57,9 @@ func ReadFromSerial() {
 	setup()
 
 	for {
-		msg := read()
+		msg := string(read())
 
 		log.Println(string(msg))
-		config.Websocket.WriteMessage(websocket.TextMessage, msg)
+		models.CurrentData.Write(msg)
 	}
 }

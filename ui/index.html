@@ -44,18 +44,28 @@
             </div>
         </div>
     </div>
-    
+    <script src="js/jquery-3.6.0.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/dayjs.min.js"></script>
     <script>
         let airTemp = document.getElementById("air_temp");
         let airHum = document.getElementById("air_hum");
 
-        let ws = new WebSocket("ws://127.0.0.1:8000/");
-        ws.onmessage = function (event) {
-            let json = JSON.parse(event.data);
-            airTemp.innerText = json.temp.toFixed(1);
-        };
+        function poll() {
+            $.ajax("http://127.0.0.1:8000/")
+            .done( (data) => {
+                if (data.length < 1) {
+                    return;
+                }
+
+                let json = JSON.parse(data);
+                airTemp.innerText = json.temp.toFixed(1);
+            });
+        }
+        poll();
+
+        setInterval(poll, 1000);
+
     </script>
 </body>
 
