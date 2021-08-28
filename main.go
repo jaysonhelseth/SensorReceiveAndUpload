@@ -29,5 +29,6 @@ func main() {
 	}
 
 	go io.ReadFromSerial()
+	go io.StoreData()
 	log.Fatal(srv.ListenAndServe())
 }
