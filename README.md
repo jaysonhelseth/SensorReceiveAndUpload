@@ -2,22 +2,22 @@
 Receive the Xbee (Zigbee) data and upload it to the cloud. There will be the ability to see the data too.
 
 ## Collecting Data
-There will be a Go server running in systemd that will collect the Xbee data. Systemd files are stored in `/etc/systemd/system` and have a name such as `runlistener.system`.
+There will be a Go server running in systemd that will collect the Xbee data. Systemd files are stored in `/etc/systemd/system` and have a name such as `runlistener.service`.
 ```
 # Example of a service file
 [Unit]
-Description=Testing out a service
+Description=Sensor Receive
 
 [Service]
-User=jayson
-WorkingDirectory=/home/jayson/projects/testService
-ExecStart=/usr/bin/python3 test.py
+User=pi
+EnvironmentFile=/etc/default/sensor-receive
+ExecStart=/home/pi/SensorReceiveAndUpload/PiSensorReceive
 Restart=always
 
 [Install]
 WantedBy=multi-user.target
 ```
-Then run `sudo systemctl daemon-reload`. Now you can do the normal systemctl operations of `start, stop, status, enable, disable`. You can even use `journalctl`.
+The EnvironmentFile is where you would store any environment variables that the program is looking for. Then run `sudo systemctl daemon-reload`. Now you can do the normal systemctl operations of `start, stop, status, enable, disable`. You can even use `journalctl`.
 
 ## Sending Data
 There will be a go routine that will send the data every 3 minutes to a free tier of cockroachdb in the cloud.
