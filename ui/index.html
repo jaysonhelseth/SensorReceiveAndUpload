@@ -25,7 +25,7 @@
                 <div class="card-body">
                     <p class="card-text">
                         <div class="row">
-                            <span class="temp">72.5</span>
+                            <span class="temp" id="pool"></span>
                         </div>
                     </p>
                 </div>
@@ -49,6 +49,7 @@
     <script src="js/dayjs.min.js"></script>
     <script>
         let airTemp = document.getElementById("air_temp");
+        let pool = document.getElementById("pool");
         let airHum = document.getElementById("air_hum");
 
         function poll() {
@@ -60,6 +61,7 @@
 
                 let json = JSON.parse(data);
                 airTemp.innerText = json.temp.toFixed(1);
+                pool.innerHTML = json.pool.toFixed(1);
             });
         }
         poll();
