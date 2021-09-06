@@ -29,7 +29,8 @@ The current device has a small screen with xserver and no desktop installed. The
 ```
 #!/bin/sh
 
+sudo systemctl start sensor-receive.service
 unclutter -idle 0.1 &
-
-exec chromium-browser --kiosk http://localhost/index.php
+exec chromium-browser --kiosk file:///home/pi/SensorReceiveAndUpload/ui/index.html
 ```
+The sensor-receive service is started in the .xinitrc file so it has perfect timing. This should still allow the service to handle restarting itself if it fails.
