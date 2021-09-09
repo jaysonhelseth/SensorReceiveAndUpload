@@ -26,15 +26,15 @@ func setup() {
 	}
 }
 
-func read() []byte {
+func read() ([]byte, error) {
 	reader := bufio.NewReader(device)
 	bytes, err := reader.ReadBytes('\x7d')
 
 	if err != nil {
-		errorTempMsg()
+		return errorTempMsg(), err
 	}
 
-	return fixData(bytes)
+	return fixData(bytes), nil
 }
 
 func fixData(bytes []byte) []byte {
@@ -57,9 +57,18 @@ func ReadFromSerial() {
 	setup()
 
 	for {
-		msg := string(read())
+		serialData, err := read()
 
-		log.Println(string(msg))
+		var msg string
+		if err == nil {
+			dataBin := models.DataBin{}
+			dataBin.GetTime(serialData)
+			msg = dataBin.Stringify()
+		} else {
+			msg = string(serialData)
+		}
+
+		log.Println(msg)
 		models.CurrentData.Write(msg)
 	}
 }
