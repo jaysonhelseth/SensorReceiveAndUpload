@@ -18,7 +18,7 @@
 </head>
 
 <body class="bg-dark">
-    <div class="d-flex align-items-center justify-content-around" style="height: 240px;">
+    <div class="d-flex align-items-center justify-content-around">
         <div class="flex-sm-fill">
             <div class="card text-center border-light bg-dark text-white mb-3">
                 <div class="card-header border-light heading">Pool</div>
@@ -44,6 +44,9 @@
             </div>
         </div>
     </div>
+    <div class="row text-white text-center">
+        <span class="temp" id="air_hum"></span>
+    </div>
     <script src="js/jquery-3.6.0.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/dayjs.min.js"></script>
@@ -61,7 +64,8 @@
 
                 let json = JSON.parse(data);
                 airTemp.innerText = json.temp.toFixed(1);
-                pool.innerHTML = json.pool.toFixed(1);
+                pool.innerText = json.pool.toFixed(1);
+                airHum.innerText = `Humidity: ${json.humidity}`;
             });
         }
         poll();
